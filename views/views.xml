@@ -1,0 +1,82 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="book_store.list">
+      <field name="name">图书列表</field>
+      <field name="model">book_store.book</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="author"/>
+          <field name="date"/>
+          <field name="price"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="book_store.book_form" model="ir.ui.view">
+      <field name="name">图书</field>
+      <field name="model">book_store.book</field>
+      <field name="arch" type="xml">
+        <form string="图书详情" class="">
+          <header>
+            <button type="object" name="btn_test" string="测试按钮"/>
+          </header>
+          <sheet>
+            <h1>
+              <field name="name" invisible="0"/>
+            </h1>
+            <group>
+              <field name="author" invisible="0"/>
+              <field name="date" invisible="0"/>
+              <field name="price" invisible="0"/>
+              <field name="ref" invisible="0"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="book_store.action_window">
+      <field name="name">图书</field>
+      <field name="res_model">book_store.book</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+   
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="book_store.action_server">
+      <field name="name">book_store server</field>
+      <field name="model_id" ref="model_book_store_book_store"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+
+    <menuitem name="浪矢书店" id="book_store.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="书店" id="book_store.menu_book" action="book_store.action_window" parent="book_store.menu_root"/>
+    <menuitem name="分类" id="book_store.menu_category"  parent="book_store.menu_root"/>
+
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="book_store.menu_1_list" parent="book_store.menu_1" action="book_store.action_window"/>
+    <menuitem name="Server to list" id="book_store" parent="book_store.menu_2" action="book_store.action_server"/>
+    -->
+  </data>
+</odoo>
