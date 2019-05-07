@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+from datetime import timedelta
 from odoo import models, fields, api
 import logging
 
@@ -16,6 +18,7 @@ class Book(models.Model):
     price = fields.Float("定价", help="定价")
     ref = fields.Reference(
         selection=[('book_store.author', '作者'), ('book_store.publisher', '出版商')])
+    age = fields.Integer('书龄', compute="_get_book_age", search="_search_ages")
 
     @api.one
     def btn_test(self):
@@ -23,8 +26,46 @@ class Book(models.Model):
         _logger.info(f"测试创建出版商和作者")
         self.env['book_store.publisher'].sudo().create({
             "name": "超新星出版社",
-            "signed_authors": [(0, 0, {'name': '本杰明 巴顿', 'age': 90}),(0,0, {'name': '刘天然', 'age': 28})]
+            "signed_authors": [(0, 0, {'name': '本杰明 巴顿', 'age': 90}), (0, 0, {'name': '刘天然', 'age': 28})]
         })
+
+    @api.depends('date')
+    def _get_book_age(self):
+        self.age = (datetime.now().date() - self.date).days
+
+    @api.model
+    def _search_ages(self, operator, operand):
+        """search方法"""
+        if operator not in ('>', '>=', '<', '<=', '='):
+            return []
+        if type(operand) not in (float, int):
+            return []
+        start_date = datetime.now().date() - timedelta(days=operand)
+        ops = {
+            ">": "<",
+            ">=": "<=",
+            "<": ">",
+            "<=": ">=",
+            "=": "="
+        }
+        return [('date', ops[operator], start_date)]
+
+
+class eBook(models.Model):
+    _inherit = "book_store.book"
+    _name = "book_store.ebook"
+
+    etype = fields.Selection(selection=[('mobi', 'Mobi'), ('epub', 'Epub'), (
+        'awz', 'Awz3')], string='电子书格式', default='epub', help='')
+
+
+class sBook(models.Model):
+
+    _name = "book_store.sbook"
+    _inherits = {'book_store.ebook': 'ebook_id'}
+
+    ebook_id = fields.Many2one(
+        'book_store.ebook', string='ebook', ondelete='restrict', required=True, help='')
 
 
 class Author(models.Model):

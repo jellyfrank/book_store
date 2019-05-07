@@ -31,6 +31,7 @@
               <field name="author" invisible="0"/>
               <field name="date" invisible="0"/>
               <field name="price" invisible="0"/>
+              <field name="age" invisible="0"/>
               <field name="ref" invisible="0"/>
             </group>
           </sheet>
@@ -40,13 +41,92 @@
 
 
     <!-- actions opening views on models -->
-    
+
     <record model="ir.actions.act_window" id="book_store.action_window">
       <field name="name">图书</field>
       <field name="res_model">book_store.book</field>
       <field name="view_mode">tree,form</field>
     </record>
-   
+
+    <record model="ir.ui.view" id="book_store.elist">
+      <field name="name">电子图书列表</field>
+      <field name="model">book_store.ebook</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="author"/>
+          <field name="date"/>
+          <field name="price"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="book_store.ebook_form" model="ir.ui.view">
+      <field name="name">电子图书</field>
+      <field name="model">book_store.ebook</field>
+      <field name="arch" type="xml">
+        <form string="图书详情" class="">
+          <sheet>
+            <h1>
+              <field name="name" invisible="0"/>
+            </h1>
+            <group>
+              <field name="author" invisible="0"/>
+              <field name="date" invisible="0"/>
+              <field name="price" invisible="0"/>
+              <field name="ref" invisible="0"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="book_store.eaction_window">
+      <field name="name">电子图书</field>
+      <field name="res_model">book_store.ebook</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="book_store.slist">
+      <field name="name">会员图书列表</field>
+      <field name="model">book_store.sbook</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="author"/>
+          <field name="date"/>
+          <field name="price"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="book_store.sbook_form" model="ir.ui.view">
+      <field name="name">会员图书</field>
+      <field name="model">book_store.sbook</field>
+      <field name="arch" type="xml">
+        <form string="图书详情" class="">
+          <sheet>
+            <h1>
+              <field name="name" invisible="0"/>
+            </h1>
+            <group>
+              <field name="ebook_id"/>
+              <field name="author" invisible="0"/>
+              <field name="date" invisible="0"/>
+              <field name="price" invisible="0"/>
+              <field name="ref" invisible="0"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="book_store.saction_window">
+      <field name="name">会员图书</field>
+      <field name="res_model">book_store.sbook</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
 
     <!-- server action to the one above -->
     <!--
@@ -64,14 +144,34 @@
     </record>
     -->
 
+    <record id="book_store_search_view" model="ir.ui.view">
+      <field name="name">图书搜索</field>
+      <field name="model">book_store.book</field>
+      <field name="arch" type="xml">
+        <search string="图书搜索">
+          <field name="author"/>
+          <field name="date"/>
+          <field name="price"/>
+          <separator/>
+          <filter name="liu_book" string="大刘小说" domain="[('author','=','刘慈欣')]" />
+          <separator/>
+          <group expand="0" string="Group By">
+            <filter name="author" string="按作者分组" domain="[]" context="{'group_by':'author'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
     <!-- Top menu item -->
 
     <menuitem name="浪矢书店" id="book_store.menu_root"/>
 
     <!-- menu categories -->
 
-    <menuitem name="书店" id="book_store.menu_book" action="book_store.action_window" parent="book_store.menu_root"/>
-    <menuitem name="分类" id="book_store.menu_category"  parent="book_store.menu_root"/>
+    <menuitem name="图书" id="book_store.menu_book" action="book_store.action_window" parent="book_store.menu_root"/>
+    <menuitem name="电子图书" id="book_store.emenu_book" action="book_store.eaction_window" parent="book_store.menu_root"/>
+    <menuitem name="会员图书" id="book_store.smenu_book" action="book_store.saction_window" parent="book_store.menu_root"/>
+    <menuitem name="分类" id="book_store.menu_category" parent="book_store.menu_root"/>
 
     <!-- actions -->
     <!--
