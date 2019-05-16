@@ -50,6 +50,13 @@ class Book(models.Model):
         }
         return [('date', ops[operator], start_date)]
 
+    @api.multi
+    def write(self, vals):
+        _logger.info(f"write:{vals}")
+        _logger.info(f"self:{self}")
+        res = super(Book, self).write(vals)
+        return res
+
 
 class eBook(models.Model):
     _inherit = "book_store.book"
