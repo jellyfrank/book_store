@@ -57,6 +57,8 @@ class Book(models.Model):
         res = super(Book, self).write(vals)
         return res
 
+    
+
 
 class eBook(models.Model):
     _inherit = "book_store.book"
