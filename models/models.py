@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from datetime import timedelta
+from datetime import date
 from odoo import models, fields, api
 import logging
 
@@ -14,7 +15,7 @@ class Book(models.Model):
     name = fields.Char('名称', help='书名')
     author = fields.Many2one(
         'book_store.author', string='作者', help='作者', delegate=True)
-    date = fields.Date("出版日期", help="日期")
+    date = fields.Date("出版日期", help="日期",default=date.today())
     price = fields.Float("定价", help="定价")
     ref = fields.Reference(
         selection=[('book_store.author', '作者'), ('book_store.publisher', '出版商')])
@@ -31,7 +32,7 @@ class Book(models.Model):
 
     @api.depends('date')
     def _get_book_age(self):
-        self.age = (datetime.now().date() - self.date).days if self.date else 0
+        self.age = (date.today() - self.date).days
 
     @api.model
     def _search_ages(self, operator, operand):
@@ -52,7 +53,6 @@ class Book(models.Model):
 
     @api.multi
     def write(self, vals):
-        print('----编辑方法-----')
         _logger.info(f"write:{vals}")
         _logger.info(f"self:{self}")
         res = super(Book, self).write(vals)
@@ -62,7 +62,6 @@ class Book(models.Model):
 
     @api.model
     def create(self, vals):
-        print('---创建方法-----')
         return super(Book, self).create(vals)
 
     @api.one
@@ -70,7 +69,6 @@ class Book(models.Model):
         self.__log_book_name()
 
     def __log_book_name(self):
-        print('Book私有方法')
         _logger.info(f"图书名称：{self.name}")
 
     @api.model
@@ -81,9 +79,7 @@ class Book(models.Model):
 
     @api.model
     def fields_get(self, allfields=None, attributes=None):
-        print('*******')
         res = super(Book, self).fields_get(allfields, attributes)
-        print(res)
         return res
 
 

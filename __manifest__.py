@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "book_store",
+    'name': "西西弗斯书店",
 
     'summary': """
-        demo module for tutorial.""",
+        odoo开发从入门到精通示例模块""",
 
     'description': """
         This module is writing for who wants learn odoo developments.
