@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="bing">
+        <iframe marginheight="0" marginwidth="0" width="100%" height="910" src="https://www.bing.com" frameborder="0" allowfullscreen="True"></iframe>
+    </t>
+</templates>

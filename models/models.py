@@ -31,7 +31,7 @@ class Book(models.Model):
 
     @api.depends('date')
     def _get_book_age(self):
-        self.age = (datetime.now().date() - self.date).days
+        self.age = (datetime.now().date() - self.date).days if self.date else 0
 
     @api.model
     def _search_ages(self, operator, operand):
@@ -49,6 +49,42 @@ class Book(models.Model):
             "=": "="
         }
         return [('date', ops[operator], start_date)]
+
+    @api.multi
+    def write(self, vals):
+        print('----编辑方法-----')
+        _logger.info(f"write:{vals}")
+        _logger.info(f"self:{self}")
+        res = super(Book, self).write(vals)
+        _logger.info(f"write returns:{res}")
+        self.log_book_name()
+        return res
+
+    @api.model
+    def create(self, vals):
+        print('---创建方法-----')
+        return super(Book, self).create(vals)
+
+    @api.one
+    def log_book_name(self):
+        self.__log_book_name()
+
+    def __log_book_name(self):
+        print('Book私有方法')
+        _logger.info(f"图书名称：{self.name}")
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super(Book, self).fields_view_get(
+            view_id, view_type, toolbar, submenu)
+        return res
+
+    @api.model
+    def fields_get(self, allfields=None, attributes=None):
+        print('*******')
+        res = super(Book, self).fields_get(allfields, attributes)
+        print(res)
+        return res
 
 
 class eBook(models.Model):

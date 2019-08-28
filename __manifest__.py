@@ -24,8 +24,13 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/client.xml',
         'views/views.xml',
+        'views/inherit_view.xml'
         # 'views/templates.xml',
+    ],
+    "qweb":[
+        "static/src/xml/page.xml"
     ],
     # only loaded in demonstration mode
     'demo': [
