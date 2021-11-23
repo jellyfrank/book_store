@@ -6,17 +6,18 @@
         odoo开发从入门到精通示例模块""",
 
     'description': """
-        This module is writing for who wants learn odoo developments.
+        本模块为 odoo技术开发白皮书 的配套教学模块.
+        如果有问题欢迎在github中给作者提issue. 
     """,
 
     'author': "KevinKong",
-    'website': "http://mixoo.cn",
+    'website': "http://www.odoomommy.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'tutorial',
-    'version': '0.1',
+    'version': '15.1',
 
     # any module necessary for this one to work correctly
     'depends': ['base'],
@@ -24,9 +25,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/client.xml',
         'views/views.xml',
-        'views/inherit_view.xml'
         # 'views/templates.xml',
     ],
     "qweb":[
