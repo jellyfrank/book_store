@@ -3,3 +3,4 @@
 # @Author  : Kevin Kong (kfx2007@163.com)
 
 from . import models
+from . import author

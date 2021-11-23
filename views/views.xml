@@ -8,7 +8,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="author"/>
+          <field name="authors" widget="many2many_tags"/>
           <field name="date"/>
           <field name="price"/>
         </tree>
@@ -20,12 +20,21 @@
       <field name="model">book_store.book</field>
       <field name="arch" type="xml">
         <form string="图书详情">
+          <header>
+            <button name="button_create" type="object" string="随机添加一个作者" class="oe_highlight"/>
+            <button name="button_update" type="object" string="给作者们加颗❤️"  class="oe_highlight"/>
+            <button name="button_delete" type="object" string="删除一个作者"  class="oe_highlight"/>
+            <button name="button_clear" type="object" string="删除所有作者"  class="oe_highlight"/>
+          </header>
           <sheet>
-            <h1>
-              <field name="name"/>
-            </h1>
+            <div class="oe_title">
+              <h1>
+                <label for="name" string="名称" class="oe_edit_only"/>
+                <field name="name"/>
+              </h1>
+            </div>
             <group>
-              <field name="author"/>
+              <field name="authors" widget="many2many_tags"/>
               <field name="date"/>
               <field name="price"/>
             </group>
