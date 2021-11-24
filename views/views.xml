@@ -22,9 +22,9 @@
         <form string="图书详情">
           <header>
             <button name="button_create" type="object" string="随机添加一个作者" class="oe_highlight"/>
-            <button name="button_update" type="object" string="给作者们加颗❤️"  class="oe_highlight"/>
-            <button name="button_delete" type="object" string="删除一个作者"  class="oe_highlight"/>
-            <button name="button_clear" type="object" string="删除所有作者"  class="oe_highlight"/>
+            <button name="button_update" type="object" string="给作者们加颗❤️" class="oe_highlight"/>
+            <button name="button_delete" type="object" string="删除一个作者" class="oe_highlight"/>
+            <button name="button_clear" type="object" string="删除所有作者" class="oe_highlight"/>
           </header>
           <sheet>
             <div class="oe_title">
@@ -43,13 +43,42 @@
       </field>
     </record>
 
+    <record id="book_kanban" model="ir.ui.view">
+      <field name="name">图书看板视图</field>
+      <field name="model">book_store.book</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="name"/>
+          <field name="authors"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                <div class="o_kanban_record_top mb16">
+                  <strong class="o_kanban_record_title">
+                    <span>
+                      <t t-esc="record.name.value"/>
+                    </span>
+                  </strong>
+                </div>
+                <div class="o_kanban_record_bottom">
+                  <div class="oe_kanban_bottom_left text-muted">
+                    <field  name="authors" widget="many2many_tags"/>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="book_store.action_window">
       <field name="name">图书</field>
       <field name="res_model">book_store.book</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,kanban</field>
     </record>
 
 
