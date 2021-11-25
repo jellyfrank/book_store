@@ -3,7 +3,7 @@
 # @Author  : Kevin Kong (kfx2007@163.com)
 
 from datetime import datetime, timedelta, date
-from odoo.exceptions import AccessDenied
+from odoo.exceptions import AccessDenied, ValidationError
 from odoo import models, fields, api
 from odoo.fields import Command
 import logging
@@ -15,6 +15,12 @@ class Book(models.Model):
 
     _name = 'book_store.book'
     _description = "图书"
+
+    @api.constrains("name")
+    def _check_name(self):
+        """检查名称长度"""
+        if len(self.name) > 10:
+            raise ValidationError("图书名称必须限制在10个字符以内")
 
     name = fields.Char('名称', help="书名")
     authors = fields.Many2many("book_store.author", string="作者")
@@ -43,3 +49,4 @@ class Book(models.Model):
     def button_clear(self):
         """"删除所有作者"""
         self.authors = [Command.clear()]
+
