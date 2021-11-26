@@ -16,11 +16,16 @@ class Book(models.Model):
     _name = 'book_store.book'
     _description = "图书"
 
-    @api.constrains("name")
+    def _get_constrains_fields(self):
+        return ['name', 'date']
+
+    @api.constrains(_get_constrains_fields)
     def _check_name(self):
         """检查名称长度"""
         if len(self.name) > 10:
             raise ValidationError("图书名称必须限制在10个字符以内")
+        if self.date < date(2000,1,1):
+            raise ValidationError("只能添加2000年以后的图书")
 
     name = fields.Char('名称', help="书名")
     authors = fields.Many2many("book_store.author", string="作者")
@@ -49,4 +54,3 @@ class Book(models.Model):
     def button_clear(self):
         """"删除所有作者"""
         self.authors = [Command.clear()]
-
