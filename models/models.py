@@ -5,7 +5,6 @@
 from datetime import datetime, timedelta, date
 from odoo.exceptions import AccessDenied, ValidationError
 from odoo import models, fields, api
-from odoo.fields import Command
 import logging
 from dateutil.relativedelta import relativedelta
 
@@ -42,13 +41,13 @@ class Book(models.Model):
 
     def button_create(self):
         """创建作者方法"""
-        self.authors = [Command.create({
+        self.authors = [(0, 0, {
             "name": "瑶瑶"
         })]
 
     def button_update(self):
         """更新作者方法"""
-        self.authors = [Command.update(author.id, {
+        self.authors = [(2, author.id, {
             "name": f"❤{author.name}"
         }) for author in self.authors]
 
@@ -57,8 +56,8 @@ class Book(models.Model):
         if not self.authors:
             raise AccessDenied("没有更多作者了")
         author_id = self.authors[0]
-        self.authors = [Command.delete(author_id.id)]
+        self.authors = [(3, author_id.id)]
 
     def button_clear(self):
         """"删除所有作者"""
-        self.authors = [Command.clear()]
+        self.authors = [(5,)]

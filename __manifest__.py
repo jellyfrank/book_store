@@ -17,18 +17,20 @@
     # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'tutorial',
-    'version': '15.1.3',
+    'version': '14.1.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['sale_management'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
-        # 'views/templates.xml',
+        "views/sale.xml",
+        'views/templates.xml',
     ],
     "qweb":[
+        "static/src/js/components/PartnerOrderSummary.xml",
         "static/src/xml/page.xml"
     ],
     # only loaded in demonstration mode
