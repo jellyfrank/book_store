@@ -34,6 +34,7 @@
               </h1>
             </div>
             <group>
+              <field name="serial"/>
               <field name="authors" widget="many2many_tags"/>
               <field name="date"/>
               <field name="price"/>
