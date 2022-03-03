@@ -28,6 +28,11 @@
         'views/views.xml',
         # 'views/templates.xml',
     ],
+    "assets":{
+        "web.assets_backend":[
+            "book_store/static/src/js/*.js"
+        ]
+    },
     "qweb":[
         "static/src/xml/page.xml"
     ],
