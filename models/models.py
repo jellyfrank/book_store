@@ -43,7 +43,7 @@ class Book(models.Model):
     def button_create(self):
         """创建作者方法"""
         self.authors = [Command.create({
-            "name": "瑶瑶"
+            "name": "云天河"
         })]
 
     def button_update(self):

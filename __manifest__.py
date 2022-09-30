@@ -20,22 +20,23 @@
     'version': '15.1.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['sale_management'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'views/sale.xml'
         # 'views/templates.xml',
     ],
     "assets":{
         "web.assets_backend":[
-            "book_store/static/src/js/*.js"
+            "book_store/static/src/js/sale.js"
+        ],
+        "web.assets_qweb":[
+            "book_store/static/src/xml/sale.xml"
         ]
     },
-    "qweb":[
-        "static/src/xml/page.xml"
-    ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
