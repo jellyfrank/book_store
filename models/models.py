@@ -8,6 +8,7 @@ from odoo import models, fields, api
 from odoo.fields import Command
 import logging
 from dateutil.relativedelta import relativedelta
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -32,6 +33,11 @@ class Book(models.Model):
         else:
             self.is_new = True
 
+    def _action_pops_up_confirm(self):
+        self.unlink()
+        print('-----------')
+        print('图书已删除')
+
     name = fields.Char('名称', help="书名")
     serial = fields.Many2one("book_store.serial", string="丛书")
     serial_name = fields.Char("丛书名称", related="serial.name")
@@ -39,6 +45,7 @@ class Book(models.Model):
     date = fields.Date("出版日期", help="出版日期")
     price = fields.Float("定价", help="定价")
     is_new = fields.Boolean("是否新书", compute="_is_new")
+    img = fields.ImageURL("图书封面")
 
     def button_create(self):
         """创建作者方法"""
@@ -62,3 +69,14 @@ class Book(models.Model):
     def button_clear(self):
         """"删除所有作者"""
         self.authors = [Command.clear()]
+
+    def button_tip_test(self):
+        """提示框"""
+
+    def button_confirm_test(self):
+        """弹窗测试"""
+        return self.show_confirm_message("Are you sure?","Would you really like to delete this book？")
+
+    def button_exception(self):
+        """传统提示框"""
+        raise UserError("This is a demo Exception.")

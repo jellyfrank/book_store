@@ -25,6 +25,9 @@
             <button name="button_update" type="object" string="给作者们加颗❤️" class="oe_highlight"/>
             <button name="button_delete" type="object" string="删除一个作者" class="oe_highlight"/>
             <button name="button_clear" type="object" string="删除所有作者" class="oe_highlight"/>
+            <button name="button_tip_test" type="object" string="提示对话框" class="oe_highlight"/>
+            <button name="button_confirm_test" type="object" string="确认对话框" class="oe_highlight"/>
+            <button name="button_exception" type="object" string="异常提示" class="oe_highlight"/>
           </header>
           <sheet>
             <div class="oe_title">
@@ -34,10 +37,11 @@
               </h1>
             </div>
             <group>
-              <field name="serial"/>
+              <widget name="my_widget"/>
               <field name="authors" widget="many2many_tags"/>
               <field name="date"/>
               <field name="price"/>
+              <field name="img"/>
             </group>
           </sheet>
         </form>

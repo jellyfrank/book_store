@@ -17,10 +17,10 @@
     # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'tutorial',
-    'version': '15.1.3',
+    'version': '15.1.4',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale_management'],
+    'depends': ['sale_management','mommy_image_field'],
 
     # always loaded
     'data': [
@@ -31,7 +31,7 @@
     ],
     "assets":{
         "web.assets_backend":[
-            "book_store/static/src/js/sale.js"
+            "book_store/static/src/js/*.js"
         ],
         "web.assets_qweb":[
             "book_store/static/src/xml/sale.xml"
